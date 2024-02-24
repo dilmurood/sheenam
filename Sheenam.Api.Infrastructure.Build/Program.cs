@@ -4,67 +4,70 @@ using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV1s;
 
-var githubPipeline = new
+internal class Program
 {
-    Name = "Sheenam Build Pipeline",
-    OnEvents = new Events
+    private static void Main(string[] args)
     {
-        PullRequest = new PullRequestEvent
+        var githubPipeline = new
         {
-            Branches = new string[] { "main" }
-        },
-
-        Push = new PushEvent
-        {
-            Branches = new string[] {"main"
-        }
-        }
-    }
-
-    Jobs = new Jobs
-    {
-        Build = new BuildJob
-        {
-            RunsOn = BuildMachines.Windows2022,
-
-            Steps = new List<GithubTask>
+            Name = "Sheenam Build Pipeline",
+            OnEvents = new Events
             {
-                new CheckoutTaskV2
+                PullRequest = new PullRequestEvent
                 {
-                    Name = "Checking out code"
+                    Branches = new string[] { "main" }
                 },
 
-                new SetupDotNetTaskV1
+                Push = new PushEvent
                 {
-                    Name = "Setting Up .NET",
-                    TargetDotNetVersion = new TargetDotNetVersion
+                    Branches = new string[] { "main" }
+                }
+            },
+
+            
+            Job = new Job
+            {
+                RunsOn = BuildMachines.Windows2022,
+
+                Steps = new List<GithubTask>
+                {
+                    new CheckoutTaskV2
                     {
-                        DotNetVersion = "6.0.300"                    
+                        Name = "Checking out code"
+                    },
+
+                    new SetupDotNetTaskV1
+                    {
+                        Name = "Setting Up .NET",
+                        TargetDotNetVersion = new TargetDotNetVersion
+                        {
+                            DotNetVersion = "6.0.300"
+                        }
+                    },
+
+                    new RestoreTask
+                    {
+                        Name = "Restoring Nuget Packages"
+                    },
+
+                    new DotNetBuildTask
+                    {
+                        Name = "Building Project"
+                    },
+
+                    new TestTask
+                    {
+                        Name = "Running Tests"
                     }
-                },
-                
-                new RestoreTask
-                {
-                    Name = "Restoring Nuget Packages"
-                },
-
-                new DotNetBuildTask
-                {
-                    Name = "Building Project"
-                },
-
-                new TestTask
-                {
-                    Name = "Running Tests"
                 }
             }
+            
+        };
 
-        }
+    var client = new ADotNetClient();
+
+    client.SerializeAndWriteToFile(
+        adoPipeline: githubPipeline,
+        path: @"C:\\Users\\Asus\\Desktop\\sheenam\\.github\\workflows\\dotnet.yml");
     }
-};
-
-var client = new ADotNetClient();
-
-client.SerializeAndWriteToFile(
-    adoPipeline: githubPipeline,
-    path: "../../../../.github/workflows/dotnet.yml");
+}
