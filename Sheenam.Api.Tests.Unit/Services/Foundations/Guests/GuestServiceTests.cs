@@ -6,7 +6,7 @@ using Sheenam.Api.Services.Foundations.Guests;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
-    public class GuestServiceTests
+    public partial class GuestServiceTests
     {
         private readonly Mock<IStorageBroker> storageBrokerMock;
 
@@ -20,8 +20,8 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 new GuestService(storageBroker: storageBrokerMock.Object);
         }
 
-        [Fact]
-        public async Task ShouldAddGuestAsync()
+        //[Fact]
+        /*public async Task ShouldAddGuestAsync()
         {
             //Arrange
             Guest randomGuest = new Guest()
@@ -43,6 +43,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             //Assert
             actual.Should().BeEquivalentTo(randomGuest);
-        }
+        }*/
     }
 }

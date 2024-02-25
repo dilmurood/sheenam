@@ -1,9 +1,10 @@
 ﻿using System;
+using Xeptions;
 
 namespace Sheenam.Api.Services.Foundations.Guests.Exceptions
 {
-    public class NullGuestException : Exception
+    public class NullGuestException : Xeption
     {
-        public NullGuestException() { }
+        public NullGuestException() : base(message: "Guest is null"){}
     }
 }
