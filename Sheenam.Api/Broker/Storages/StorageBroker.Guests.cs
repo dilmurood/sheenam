@@ -11,11 +11,11 @@ namespace Sheenam.Api.Broker.Storages
 
         public async ValueTask<Guest> InsertGuestAsync(Guest guest)
         {
-            using var broker = new StorageBroker(this.configuration);
+            using var broker = new StorageBroker(this._configuration);
 
             EntityEntry<Guest> guestEntityEntry = await broker.Guests.AddAsync(guest);
 
-            await broker.SaveChangesAsync(guest);
+            await broker.SaveChangesAsync();
 
             return guestEntityEntry.Entity;
         }
