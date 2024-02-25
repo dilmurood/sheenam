@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Sheenam.Api.Broker.Storages
 {
-    public class StorageContext : EFxceptionsContext
+    public class StorageBroker : EFxceptionsContext, IStorageBroker    
     {
         private readonly IConfiguration _configuration;
 
-        public StorageContext( IConfiguration configuration)
+        public StorageBroker( IConfiguration configuration)
         {
             _configuration = configuration;
             this.Database.Migrate();
