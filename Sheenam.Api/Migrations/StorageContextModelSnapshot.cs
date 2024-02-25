@@ -9,7 +9,7 @@ using Sheenam.Api.Broker.Storages;
 
 namespace Sheenam.Api.Migrations
 {
-    [DbContext(typeof(StorageContext))]
+    [DbContext(typeof(StorageBroker))]
     partial class StorageContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
