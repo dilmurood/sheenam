@@ -1,9 +1,5 @@
 ﻿using Sheenam.Api.Models.Foundations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sheenam.Api.Services.Foundations.Guests.Exceptions;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
@@ -13,10 +9,17 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         public async Task ShouldThrowValidationExceptionOnAddIfGuestIsNullAndLogInAsync()
         {
             //given
-            Guest nullGuest = null;
+            Guest nullGuest = CreateRandomGuest();
+            var nullGuestException = new NullGuestException();
+            var expectedGuestValidationException = 
+                new GuestValidationException(nullGuestException);
+
+
             //when
+            ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(nullGuest);
 
             //then
+            await Assert.ThrowsAsync<GuestValidationException> (() => addGuestTask.AsTask());
         }
     }
 }

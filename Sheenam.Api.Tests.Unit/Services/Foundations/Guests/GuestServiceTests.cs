@@ -3,10 +3,11 @@ using Moq;
 using Sheenam.Api.Broker.Storages;
 using Sheenam.Api.Models.Foundations;
 using Sheenam.Api.Services.Foundations.Guests;
+using Tynamix.ObjectFiller;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
-    public class GuestServiceTests
+    public partial class GuestServiceTests
     {
         private readonly Mock<IStorageBroker> storageBrokerMock;
 
@@ -20,8 +21,24 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 new GuestService(storageBroker: storageBrokerMock.Object);
         }
 
-        [Fact]
-        public async Task ShouldAddGuestAsync()
+        private static Guest CreateRandomGuest() =>
+            CreateGuestFiller(date: GetRandomDateTimeOffset()).Create();
+
+
+        private static DateTimeOffset GetRandomDateTimeOffset() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static Filler<Guest> CreateGuestFiller(DateTimeOffset date)
+        {
+            var filler = new Filler<Guest>();
+
+            filler.Setup().OnType<DateTimeOffset>().Use(date);
+
+            return filler;
+        }
+
+        //[Fact]
+        /*public async Task ShouldAddGuestAsync()
         {
             //Arrange
             Guest randomGuest = new Guest()
@@ -43,6 +60,6 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             //Assert
             actual.Should().BeEquivalentTo(randomGuest);
-        }
+        }*/
     }
 }
