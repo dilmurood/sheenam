@@ -3,6 +3,7 @@ using Moq;
 using Sheenam.Api.Broker.Storages;
 using Sheenam.Api.Models.Foundations;
 using Sheenam.Api.Services.Foundations.Guests;
+using Tynamix.ObjectFiller;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
@@ -18,6 +19,22 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             guestService = 
                 new GuestService(storageBroker: storageBrokerMock.Object);
+        }
+
+        private static Guest CreateRandomGuest() =>
+            CreateGuestFiller(date: GetRandomDateTimeOffset()).Create();
+
+
+        private static DateTimeOffset GetRandomDateTimeOffset() =>
+            new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static Filler<Guest> CreateGuestFiller(DateTimeOffset date)
+        {
+            var filler = new Filler<Guest>();
+
+            filler.Setup().OnType<DateTimeOffset>().Use(date);
+
+            return filler;
         }
 
         //[Fact]
