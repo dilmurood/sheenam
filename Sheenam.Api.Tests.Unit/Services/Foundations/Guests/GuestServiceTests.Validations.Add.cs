@@ -9,7 +9,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         public async Task ShouldThrowValidationExceptionOnAddIfGuestIsNullAndLogInAsync()
         {
             //given
-            Guest nullGuest = CreateRandomGuest();
+            Guest nullGuest = null;
             var nullGuestException = new NullGuestException();
             var expectedGuestValidationException = 
                 new GuestValidationException(nullGuestException);

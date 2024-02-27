@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
+using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
 using Sheenam.Api.Models.Foundations;
 using Sheenam.Api.Services.Foundations.Guests;
@@ -10,15 +11,18 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
     public partial class GuestServiceTests
     {
         private readonly Mock<IStorageBroker> storageBrokerMock;
+        private readonly Mock<ILoggingBroker> loggingBrokerMock;
 
         private readonly IGuestService guestService;
 
         public GuestServiceTests()
         {
             storageBrokerMock = new Mock<IStorageBroker>();
+            loggingBrokerMock = new Mock<ILoggingBroker>();
 
             guestService = 
-                new GuestService(storageBroker: storageBrokerMock.Object);
+                new GuestService(storageBroker: storageBrokerMock.Object,
+                loggingBroker: loggingBrokerMock.Object);
         }
 
         private static Guest CreateRandomGuest() =>
