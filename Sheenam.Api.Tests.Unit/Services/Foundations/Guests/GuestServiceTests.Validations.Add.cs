@@ -11,9 +11,9 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             //given
             Guest nullGuest = CreateRandomGuest();
             var nullGuestException = new NullGuestException();
+
             var expectedGuestValidationException = 
                 new GuestValidationException(nullGuestException);
-
 
             //when
             ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(nullGuest);
