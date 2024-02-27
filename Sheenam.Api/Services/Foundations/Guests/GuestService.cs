@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
 ﻿using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
-=======
-﻿    using Sheenam.Api.Broker.Storages;
->>>>>>> Stashed changes
 using Sheenam.Api.Models.Foundations;
 using System.Threading.Tasks;
 
