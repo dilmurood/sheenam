@@ -1,15 +1,12 @@
-<<<<<<< Updated upstream
 ﻿using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
-=======
-﻿    using Sheenam.Api.Broker.Storages;
->>>>>>> Stashed changes
 using Sheenam.Api.Models.Foundations;
+using Sheenam.Api.Models.Foundations.Exceptions;
 using System.Threading.Tasks;
 
 namespace Sheenam.Api.Services.Foundations.Guests
 {
-    public class GuestService : IGuestService
+    public partial class GuestService : IGuestService
     {
         private readonly IStorageBroker _storageBroker;
         private readonly ILoggingBroker _loggingBroker;
@@ -18,9 +15,11 @@ namespace Sheenam.Api.Services.Foundations.Guests
             _storageBroker = storageBroker; 
             _loggingBroker = loggingBroker;
         }
-        public ValueTask<Guest> AddGuestAsync(Guest guest)
+        public ValueTask<Guest> AddGuestAsync(Guest guest) => TryCatch(async () =>
         {
-            return  _storageBroker.InsertGuestAsync(guest);
-        }
+            ValidateGuestNotNull(guest);
+
+            return await _storageBroker.InsertGuestAsync(guest);
+        });
     }
 }
