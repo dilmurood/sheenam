@@ -1,6 +1,6 @@
 ﻿using Moq;
 using Sheenam.Api.Models.Foundations;
-using Sheenam.Api.Services.Foundations.Guests.Exceptions;
+using Sheenam.Api.Models.Foundations.Exceptions;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
