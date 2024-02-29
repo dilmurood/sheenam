@@ -79,7 +79,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 new GuestValidationException(invalidGuestException);
 
             //when
-            ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(invalidGuest);
+            ValueTask<Guest> addGuestTask = guestService.AddGuestAsync(invalidGuest);
 
             //then
             await Assert.ThrowsAsync<GuestValidationException> (() =>
