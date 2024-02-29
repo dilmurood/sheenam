@@ -34,6 +34,20 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
+        private static T GetInvalidEnum<T>()
+        {
+            int randomNumber = GetRundomNumber();
+            while(Enum.IsDefined(typeof(T), randomNumber) is true)
+            {
+                randomNumber = GetRundomNumber();
+            }
+
+            return (T)(object)randomNumber;
+        }
+
+        private static int GetRundomNumber() =>
+            new IntRange(2, 9).GetValue();
+
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
             return actualException => actualException.Message == expectedException.Message
@@ -48,30 +62,5 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             return filler;
         }
-
-        //[Fact]
-        /*public async Task ShouldAddGuestAsync()
-        {
-            //Arrange
-            Guest randomGuest = new Guest()
-            {
-                FirstName = "John",
-                LastName = "Shelby",
-                Address = "Birmingem",
-                DateOfBirth = new DateTimeOffset(),
-                Email = "JouhnShelby@gmail.com",
-                Gender = GenderType.male,
-                PhoneNumber = "1234567890"
-            };
-
-            this.storageBrokerMock.Setup(broker => broker.InsertGuestAsync(randomGuest))
-                .ReturnsAsync(randomGuest);
-
-            //Act
-            Guest actual = await this.guestService.AddGuestAsync(randomGuest);
-
-            //Assert
-            actual.Should().BeEquivalentTo(randomGuest);
-        }*/
     }
 }
