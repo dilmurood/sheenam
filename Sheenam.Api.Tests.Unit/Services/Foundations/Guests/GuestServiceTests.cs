@@ -32,24 +32,27 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private static Guest CreateRandomGuest() =>
             CreateGuestFiller(date: GetRandomDateTimeOffset()).Create();
 
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
 
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
         private static SqlException GetSqlError() =>
             (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
+
         private static T GetInvalidEnum<T>()
         {
-            int randomNumber = GetRundomNumber();
-            while(Enum.IsDefined(typeof(T), randomNumber) is true)
+            int randomNumber = GetRandomNumber();
+            while(Enum.IsDefined(typeof(T), randomNumber))
             {
-                randomNumber = GetRundomNumber();
+                randomNumber = GetRandomNumber();
             }
 
             return (T)(object)randomNumber;
         }
 
-        private static int GetRundomNumber() =>
+        private static int GetRandomNumber() =>
             new IntRange(2, 9).GetValue();
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)

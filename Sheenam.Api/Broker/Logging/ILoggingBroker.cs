@@ -6,7 +6,6 @@ namespace Sheenam.Api.Broker.Logging
     {
         void LogError(Exception exception);
         void LogCritical(Exception exception);
-
         void LogTrace(string message);
     }
 }

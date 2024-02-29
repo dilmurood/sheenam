@@ -8,7 +8,7 @@ namespace Sheenam.Api.Broker.Storages
     {
         private readonly IConfiguration _configuration;
 
-        public StorageBroker( IConfiguration configuration)
+        public StorageBroker (IConfiguration configuration)
         {
             _configuration = configuration;
             this.Database.Migrate();
