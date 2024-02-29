@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
 using Sheenam.Api.Models.Foundations;
 using Sheenam.Api.Services.Foundations.Guests;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using Tynamix.ObjectFiller;
 using Xeptions;
 
@@ -34,6 +36,8 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private static DateTimeOffset GetRandomDateTimeOffset() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
 
+        private static SqlException GetSqlError() =>
+            (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
         private static T GetInvalidEnum<T>()
         {
             int randomNumber = GetRundomNumber();
