@@ -3,12 +3,6 @@ using Microsoft.Data.SqlClient;
 using Moq;
 using Sheenam.Api.Models.Foundations;
 using Sheenam.Api.Models.Foundations.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
@@ -52,15 +46,15 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             //given
             var someGuest = CreateRandomGuest();
             string message = GetRandomString();
-            DuplicateKeyException duplicateKeyExcpetion = new DuplicateKeyException(message);
+            var duplicateKeyException = new DuplicateKeyException(message);
 
-            var alreadyExistGuestExceotion = new AlreadyExistGuestException(duplicateKeyExcpetion);
+            var alreadyExistGuestException = new AlreadyExistGuestException(duplicateKeyException);
 
             var expectedGuestDependencyValidationException = 
-                new GuestDependencyValidationException(alreadyExistGuestExceotion);
+                new GuestDependencyValidationException(alreadyExistGuestException);
 
             this.storageBrokerMock.Setup(broker =>
-                broker.InsertGuestAsync(someGuest)).ThrowsAsync(duplicateKeyExcpetion);
+                broker.InsertGuestAsync(someGuest)).ThrowsAsync(duplicateKeyException);
 
             //when
             ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(someGuest);
@@ -78,6 +72,36 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+        {
+            //given
+            Guest someGuest = CreateRandomGuest();
+            var serviceException = new Exception();
+            var failedGuestServiceException = new FailedGuestServiceException(serviceException);
+            var expectedGuestServiceException = new GuestServiceException(failedGuestServiceException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.InsertGuestAsync(someGuest)).ThrowsAsync(serviceException);
+
+            //when
+            ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(someGuest);
+
+            //then
+            await Assert.ThrowsAsync<GuestServiceException>(() =>
+                addGuestTask.AsTask());
+
+            storageBrokerMock.Verify(broker =>
+                broker.InsertGuestAsync(someGuest), Times.Once);
+
+            this.loggingBrokerMock.Verify(broker => broker
+                .LogError(It.Is(SameExceptionAs(expectedGuestServiceException))), Times.Once);
+
+            storageBrokerMock .VerifyNoOtherCalls();
+            loggingBrokerMock .VerifyNoOtherCalls();
 
         }
     }
