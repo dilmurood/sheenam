@@ -41,6 +41,7 @@ namespace Sheenam.Api.Services.Foundations.Guests
             Condition = string.IsNullOrWhiteSpace(text),
             Message = "Text is required"
         };
+
         private static dynamic IsInvalid(DateTimeOffset date) => new
         {
             Condition = date == default,
@@ -49,9 +50,10 @@ namespace Sheenam.Api.Services.Foundations.Guests
 
         private static dynamic IsInvalid(GenderType gender) => new
         {
-            Condition = Enum.IsDefined(gender) is false,
+            Condition = Enum.IsDefined(gender),
             Message = "Value is invalid"
         };
+
         private static void Validate(params (dynamic Rule, string Parameter)[] validations) 
         {
             var invalidGuestException = new InvalidGuestException();

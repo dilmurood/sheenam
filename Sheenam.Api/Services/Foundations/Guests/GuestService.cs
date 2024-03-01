@@ -18,7 +18,6 @@ namespace Sheenam.Api.Services.Foundations.Guests
         public ValueTask<Guest> AddGuestAsync(Guest guest) => TryCatch(async () =>
         {
             ValidateGuestNotNull(guest);
-
             return await _storageBroker.InsertGuestAsync(guest);
         });
     }
