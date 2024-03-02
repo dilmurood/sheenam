@@ -50,7 +50,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
             var alreadyExistGuestException = new AlreadyExistGuestException(duplicateKeyException);
 
-            var expectedGuestDependencyValidationException = 
+            var expectedGuestDependencyValidationException =
                 new GuestDependencyValidationException(alreadyExistGuestException);
 
             this.storageBrokerMock.Setup(broker =>
@@ -100,8 +100,8 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.Verify(broker => broker
                 .LogError(It.Is(SameExceptionAs(expectedGuestServiceException))), Times.Once);
 
-            storageBrokerMock .VerifyNoOtherCalls();
-            loggingBrokerMock .VerifyNoOtherCalls();
+            storageBrokerMock.VerifyNoOtherCalls();
+            loggingBrokerMock.VerifyNoOtherCalls();
 
         }
     }

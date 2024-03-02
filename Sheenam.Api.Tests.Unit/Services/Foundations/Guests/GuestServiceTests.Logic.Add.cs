@@ -2,11 +2,6 @@
 using Force.DeepCloner;
 using Moq;
 using Sheenam.Api.Models.Foundations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 {
@@ -21,18 +16,18 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             Guest returningGuest = inputGuest;
             Guest expectedGuest = returningGuest.DeepClone();
 
-            this.storageBrokerMock.Setup(broker => 
+            this.storageBrokerMock.Setup(broker =>
                 broker.InsertGuestAsync(inputGuest))
                 .ReturnsAsync(returningGuest);
 
             //when
-            Guest actualGuest = 
+            Guest actualGuest =
                 await this.guestService.AddGuestAsync(inputGuest);
 
             //then
             actualGuest.Should().BeEquivalentTo(expectedGuest);
 
-            this.storageBrokerMock.Verify(broker =>  broker.InsertGuestAsync(inputGuest), Times.Once);
+            this.storageBrokerMock.Verify(broker => broker.InsertGuestAsync(inputGuest), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

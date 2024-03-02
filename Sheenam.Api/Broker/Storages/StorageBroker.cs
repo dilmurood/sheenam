@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Sheenam.Api.Broker.Storages
 {
-    public partial class StorageBroker : EFxceptionsContext, IStorageBroker    
+    public partial class StorageBroker : EFxceptionsContext, IStorageBroker
     {
         private readonly IConfiguration _configuration;
 
-        public StorageBroker (IConfiguration configuration)
+        public StorageBroker(IConfiguration configuration)
         {
             _configuration = configuration;
             this.Database.Migrate();
@@ -20,6 +20,6 @@ namespace Sheenam.Api.Broker.Storages
             optionsBuilder.UseSqlServer(connectionString);
         }
 
-        public override void Dispose() {}
+        public override void Dispose() { }
     }
 }

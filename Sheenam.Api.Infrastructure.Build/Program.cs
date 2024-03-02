@@ -23,7 +23,7 @@ internal class Program
                 }
             },
 
-            
+
             Job = new Job
             {
                 RunsOn = BuildMachines.Windows2022,
@@ -60,13 +60,13 @@ internal class Program
                     }
                 }
             }
-            
+
         };
 
-    var client = new ADotNetClient();
+        var client = new ADotNetClient();
 
-    client.SerializeAndWriteToFile(
-        adoPipeline: githubPipeline,
-        path: @"C:\\Users\\Asus\\Desktop\\sheenam\\.github\\workflows\\dotnet.yml");
+        client.SerializeAndWriteToFile(
+            adoPipeline: githubPipeline,
+            path: @"C:\\Users\\Asus\\Desktop\\sheenam\\.github\\workflows\\dotnet.yml");
     }
 }

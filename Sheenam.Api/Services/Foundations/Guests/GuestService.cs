@@ -1,7 +1,6 @@
 ﻿using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
 using Sheenam.Api.Models.Foundations;
-using Sheenam.Api.Models.Foundations.Exceptions;
 using System.Threading.Tasks;
 
 namespace Sheenam.Api.Services.Foundations.Guests
@@ -12,7 +11,7 @@ namespace Sheenam.Api.Services.Foundations.Guests
         private readonly ILoggingBroker _loggingBroker;
         public GuestService(IStorageBroker storageBroker, ILoggingBroker loggingBroker)
         {
-            _storageBroker = storageBroker; 
+            _storageBroker = storageBroker;
             _loggingBroker = loggingBroker;
         }
         public ValueTask<Guest> AddGuestAsync(Guest guest) => TryCatch(async () =>

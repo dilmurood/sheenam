@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
+using Sheenam.Api.Services.Foundations.Guests;
 
 namespace Sheenam.Api
 {
@@ -22,8 +22,8 @@ namespace Sheenam.Api
 
             services.AddControllers();
             services.AddDbContext<StorageBroker>();
-            services.AddControllers();
             AddBrokers(services);
+            AddFoundationServices(services);
 
             services.AddSwaggerGen(c =>
             {
@@ -31,11 +31,6 @@ namespace Sheenam.Api
             });
         }
 
-        private static void AddBrokers(IServiceCollection services)
-        {
-            services.AddTransient<IStorageBroker, StorageBroker>();
-            services.AddTransient<ILoggingBroker, LoggingBroker>();
-        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -50,6 +45,16 @@ namespace Sheenam.Api
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+        }
+        private static void AddBrokers(IServiceCollection services)
+        {
+            services.AddTransient<IStorageBroker, StorageBroker>();
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
+        }
+
+        private static void AddFoundationServices(IServiceCollection services)
+        {
+            services.AddTransient<IGuestService, GuestService>();
         }
     }
 }
