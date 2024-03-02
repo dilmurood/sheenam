@@ -1,5 +1,4 @@
-﻿using System;
-using Xeptions;
+﻿using Xeptions;
 
 namespace Sheenam.Api.Models.Foundations.Exceptions
 {

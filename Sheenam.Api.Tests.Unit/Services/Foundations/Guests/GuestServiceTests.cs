@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Moq;
 using Sheenam.Api.Broker.Logging;
 using Sheenam.Api.Broker.Storages;
@@ -24,7 +23,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             storageBrokerMock = new Mock<IStorageBroker>();
             loggingBrokerMock = new Mock<ILoggingBroker>();
 
-            guestService = 
+            guestService =
                 new GuestService(storageBroker: storageBrokerMock.Object,
                 loggingBroker: loggingBrokerMock.Object);
         }
@@ -44,7 +43,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
         private static T GetInvalidEnum<T>()
         {
             int randomNumber = GetRandomNumber();
-            while(Enum.IsDefined(typeof(T), randomNumber))
+            while (Enum.IsDefined(typeof(T), randomNumber))
             {
                 randomNumber = GetRandomNumber();
             }
@@ -57,7 +56,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
-        
+
         private static Filler<Guest> CreateGuestFiller(DateTimeOffset date)
         {
             var filler = new Filler<Guest>();

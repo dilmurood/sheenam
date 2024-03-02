@@ -25,7 +25,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(expectedGuestValidationException))), Times.Once);
 
-            this.storageBrokerMock.Verify(broker => 
+            this.storageBrokerMock.Verify(broker =>
                 broker.InsertGuestAsync(It.IsAny<Guest>()), Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -75,20 +75,20 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
                 key: nameof(Guest.Address),
                 values: "Id is required");
 
-            var expectedGuestGuestValidationException = 
+            var expectedGuestGuestValidationException =
                 new GuestDependencyValidationException(invalidGuestException);
 
             //when
             ValueTask<Guest> addGuestTask = guestService.AddGuestAsync(invalidGuest);
 
             //then
-            await Assert.ThrowsAsync<GuestDependencyValidationException> (() =>
+            await Assert.ThrowsAsync<GuestDependencyValidationException>(() =>
                 addGuestTask.AsTask());
 
             this.loggingBrokerMock.Verify(broker => broker.LogError(
                 It.Is(SameExceptionAs(expectedGuestGuestValidationException))), Times.Once);
 
-            storageBrokerMock.Verify(broker => 
+            storageBrokerMock.Verify(broker =>
                 broker.InsertGuestAsync(It.IsAny<Guest>()), Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -110,7 +110,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             var expectedGuestValidationException = new GuestDependencyValidationException(invalidGuestException);
 
             //when 
-            ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(invalidGuest); 
+            ValueTask<Guest> addGuestTask = this.guestService.AddGuestAsync(invalidGuest);
 
             //then
             await Assert.ThrowsAsync<GuestDependencyValidationException>(() => addGuestTask.AsTask());
@@ -118,7 +118,7 @@ namespace Sheenam.Api.Tests.Unit.Services.Foundations.Guests
             this.loggingBrokerMock.Verify(broker =>
             broker.LogError(It.Is(SameExceptionAs(expectedGuestValidationException))), Times.Once);
 
-            storageBrokerMock.Verify(broker => 
+            storageBrokerMock.Verify(broker =>
             broker.InsertGuestAsync(It.IsAny<Guest>()), Times.Never());
 
             this.loggingBrokerMock.VerifyNoOtherCalls();

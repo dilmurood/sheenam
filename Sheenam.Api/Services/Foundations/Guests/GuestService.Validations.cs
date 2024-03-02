@@ -1,15 +1,13 @@
 ﻿using Sheenam.Api.Models.Foundations;
 using Sheenam.Api.Models.Foundations.Exceptions;
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using Xeptions;
 
 namespace Sheenam.Api.Services.Foundations.Guests
 {
     public partial class GuestService : Xeption
     {
-        private void ValidateGuestOnAdd(Guest guest) 
+        private void ValidateGuestOnAdd(Guest guest)
         {
             ValidateGuestNotNull(guest);
 
@@ -30,10 +28,10 @@ namespace Sheenam.Api.Services.Foundations.Guests
                 throw new NullGuestException();
         }
 
-        private static dynamic IsInvalid(Guid id) => new 
-        { 
-            Condition = id == Guid.Empty, 
-            Message = "Id is required"  
+        private static dynamic IsInvalid(Guid id) => new
+        {
+            Condition = id == Guid.Empty,
+            Message = "Id is required"
         };
 
         private static dynamic IsInvalid(string text) => new
@@ -54,11 +52,11 @@ namespace Sheenam.Api.Services.Foundations.Guests
             Message = "Value is invalid"
         };
 
-        private static void Validate(params (dynamic Rule, string Parameter)[] validations) 
+        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidGuestException = new InvalidGuestException();
 
-            foreach((dynamic rule, string parameter) in validations)
+            foreach ((dynamic rule, string parameter) in validations)
             {
                 if (rule.Condition)
                 {

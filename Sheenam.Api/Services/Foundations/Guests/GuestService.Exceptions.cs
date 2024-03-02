@@ -32,12 +32,12 @@ namespace Sheenam.Api.Services.Foundations.Guests
             }
             catch (DuplicateKeyException duplicateKeyException)
             {
-                var alreadyExistGuestException = 
+                var alreadyExistGuestException =
                     new AlreadyExistGuestException(duplicateKeyException);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistGuestException);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 var failedGuestServiceException = new FailedGuestServiceException(ex);
 
